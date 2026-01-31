@@ -1,0 +1,229 @@
+%-------------------------
+% ATS-Friendly Resume in LaTeX
+% Author: Abhishek K. Mishra
+%-------------------------
+
+\documentclass[letterpaper,11pt]{article}
+
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+\usepackage{fontawesome5}
+\usepackage{multicol}
+\setlength{\multicolsep}{-3.0pt}
+\setlength{\columnsep}{-1pt}
+\input{glyphtounicode}
+
+%----------FONT OPTIONS----------
+\usepackage[sfdefault]{roboto}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% Adjust margins
+\addtolength{\oddsidemargin}{-0.6in}
+\addtolength{\evensidemargin}{-0.5in}
+\addtolength{\textwidth}{1.19in}
+\addtolength{\topmargin}{-.7in}
+\addtolength{\textheight}{1.4in}
+
+\urlstyle{same}
+
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+% Sections formatting
+\titleformat{\section}{
+  \vspace{-4pt}\scshape\raggedright\large\bfseries
+}{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
+
+% Ensure that generate pdf is machine readable/ATS parsable
+\pdfgentounicode=1
+
+%-------------------------
+% Custom commands
+\newcommand{\resumeItem}[1]{
+  \item\small{
+    {#1 \vspace{-2pt}}
+  }
+}
+
+\newcommand{\classesList}[4]{
+    \item\small{
+        {#1 #2 #3 #4 \vspace{-2pt}}
+  }
+}
+
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-2pt}\item
+    \begin{tabular*}{1.0\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & \textbf{\small #2} \\
+      \textit{\small#3} & \textit{\small #4} \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeSubSubheading}[2]{
+    \item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \textit{\small#1} & \textit{\small #2} \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeProjectHeading}[2]{
+    \item
+    \begin{tabular*}{1.001\textwidth}{l@{\extracolsep{\fill}}r}
+      \small#1 & \textbf{\small #2}\\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeSubItem}[1]{\resumeItem{#1}\vspace{-4pt}}
+
+\renewcommand\labelitemi{$\vcenter{\hbox{\tiny$\bullet$}}$}
+\renewcommand\labelitemii{$\vcenter{\hbox{\tiny$\bullet$}}$}
+
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.0in, label={}]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
+
+%-------------------------------------------
+%%%%%%  RESUME STARTS HERE  %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{document}
+
+%----------HEADING----------
+\begin{center}
+    {\Huge \scshape Abhishek K. Mishra} \\ \vspace{1pt}
+    \small
+    \raisebox{-0.1\height}\faPhone\ +91 8931000201 ~
+    \href{mailto:abhishekmishra0@live.com}{\raisebox{-0.2\height}\faEnvelope\ abhishekmishra0@live.com} ~
+    \href{https://linkedin.com/in/mishraji89}{\raisebox{-0.2\height}\faLinkedin\ mishraji89} ~
+    \href{https://github.com/Abhishek89310}{\raisebox{-0.2\height}\faGithub\ Abhishek89310}
+    \vspace{-8pt}
+\end{center}
+
+
+%-----------SUMMARY-----------
+\section{Professional Summary}
+iOS Developer with 6+ years of experience in Swift, Clean Architecture, XCTest, and App Store deployment. Skilled in delivering end-to-end solutions across Banking, Aviation, Health, and Crowdfunding domains, with expertise in Agile methodologies and independent project execution. Proven track record of leading development initiatives and collaborating with cross-functional teams.
+
+
+%-----------TECHNICAL SKILLS-----------
+\section{Technical Skills}
+\begin{itemize}[leftmargin=0.15in, label={}]
+    \small{\item{
+     \textbf{Languages}{: Swift, Objective-C} \\
+     \textbf{Frameworks \& Tools}{: Xcode, SwiftUI, UIKit, Core Data, Combine, REST APIs, 3rd-Party Libraries} \\
+     \textbf{Architecture}{: Clean Architecture, MVVM, MVC, VIPER} \\
+     \textbf{Testing}{: XCTest, Unit Testing, UI Testing, Test-Driven Development (TDD)} \\
+     \textbf{DevOps}{: Git, GitHub Actions, CI/CD, App Store Connect, TestFlight} \\
+     \textbf{Practices}{: Agile/Scrum, Code Review, Pair Programming, Technical Documentation}
+    }}
+\end{itemize}
+\vspace{-16pt}
+
+
+%-----------EXPERIENCE-----------
+\section{Professional Experience}
+\resumeSubHeadingListStart
+
+    \resumeSubheading
+      {Nagarro}{Oct 2023 -- Present}
+      {Senior Engineer}{Gurgaon, India (Remote)}
+      \resumeItemListStart
+        \resumeItem{Developed and maintained UI components, API frameworks, and reusable modules for an Aviation domain project, ensuring scalable and maintainable architecture}
+        \resumeItem{Implemented comprehensive XCTest cases improving code coverage by 40\%, integrated GitHub Actions for CI/CD pipeline automation}
+        \resumeItem{Engineered push notifications system, app update mechanisms, Core Data integration, and data compression reducing app size by 25\%}
+        \resumeItem{Successfully delivered 2-3 key modules with high-quality, bug-free output, contributing to improved user experience and product reliability}
+        \resumeItem{Led technical discussions and collaborated effectively with team members and stakeholders to achieve project milestones}
+      \resumeItemListEnd
+
+    \resumeSubheading
+      {Infosys}{Mar 2022 -- Oct 2023}
+      {Technology Analyst}{Jaipur, India}
+      \resumeItemListStart
+        \resumeItem{Contributed to Open Banking project for a leading UK bank (HSBC), collaborating with cross-functional teams to design and enhance iOS applications}
+        \resumeItem{Developed Aadhaar verification and address-related modules, improving customer onboarding and compliance workflows}
+        \resumeItem{Managed and resolved 50+ assigned tickets, ensuring timely delivery and efficient debugging within project deadlines}
+        \resumeItem{Completed multiple Infosys certifications in iOS development, consistently upgrading skills with emerging technologies}
+      \resumeItemListEnd
+
+    \resumeSubheading
+      {Evolko}{Apr 2021 -- Feb 2022}
+      {Software Developer}{Lucknow, India}
+      \resumeItemListStart
+        \resumeItem{Implemented new enhancements and functionality across multiple iOS healthcare applications, improving performance and user experience}
+        \resumeItem{Developed scalable and optimized code using MVVM architecture pattern, ensuring maintainability and long-term application stability}
+        \resumeItem{Delivered key features including pool functionality in Evolko Doctor app, enhancing usability and increasing customer satisfaction by 30\%}
+        \resumeItem{Served as primary point of contact for Evolko Patient app, managing bug fixes, implementing enhancements, and ensuring smooth operations}
+      \resumeItemListEnd
+
+\resumeSubHeadingListEnd
+\vspace{-16pt}
+
+
+%-----------PROJECTS-----------
+\section{Key Projects}
+\resumeSubHeadingListStart
+
+    \resumeProjectHeading
+      {\textbf{Lido MBriefing} $|$ \emph{Swift, Core Data, Push Notifications, CI/CD}}{Aviation Domain}
+      \resumeItemListStart
+        \resumeItem{Aviation domain application used by leading airline pilots for digital briefing and flight operations support}
+        \resumeItem{Implemented offline-first architecture with Core Data synchronization for reliable access in low-connectivity environments}
+      \resumeItemListEnd
+      \vspace{-13pt}
+
+    \resumeProjectHeading
+      {\textbf{HSBC Banking App} $|$ \emph{Swift, Open Banking APIs, Security Protocols}}{Banking Domain}
+      \resumeItemListStart
+        \resumeItem{Banking application with focus on Aadhaar and address-related modules, improving onboarding and compliance workflows}
+        \resumeItem{Implemented secure authentication flows and data encryption following banking industry standards}
+      \resumeItemListEnd
+      \vspace{-13pt}
+
+    \resumeProjectHeading
+      {\textbf{Evolko Healthcare} $|$ \emph{Swift, MVVM, Video Calling, Real-time Chat}}{Healthcare Domain}
+      \resumeItemListStart
+        \resumeItem{Doctor-patient application enabling prescription sharing, chat, video consultations, and digital prescriptions (RX)}
+        \resumeItem{Integrated real-time communication features and HIPAA-compliant data handling}
+      \resumeItemListEnd
+
+\resumeSubHeadingListEnd
+\vspace{-15pt}
+
+
+%-----------ACHIEVEMENTS-----------
+\section{Achievements}
+\begin{itemize}[leftmargin=0.15in, label={}]
+    \small{\item{
+     $\bullet$ \textbf{Honorary Prize} at GT Hackathon 2025 -- Recognized for innovative iOS solution development \\
+     $\bullet$ \textbf{Runner Up} at Agility Quiz -- Demonstrated strong knowledge of Agile methodologies and best practices
+    }}
+\end{itemize}
+\vspace{-16pt}
+
+
+%-----------EDUCATION-----------
+\section{Education}
+\resumeSubHeadingListStart
+    \resumeSubheading
+      {B.B.D.N.I.T.M}{Aug 2015 -- June 2019}
+      {Bachelor of Technology in Information Technology -- First Division}{Lucknow, UP}
+\resumeSubHeadingListEnd
+
+
+\end{document}
