@@ -159,6 +159,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Add loaded class to body for initial animations
     document.body.classList.add('loaded');
+
+    // Double-tap on logo to open admin panel
+    const navLogo = document.querySelector('.nav-logo');
+    if (navLogo) {
+        navLogo.addEventListener('dblclick', (e) => {
+            e.preventDefault();
+            window.location.href = 'admin/';
+        });
+    }
 });
 
 // Console greeting
