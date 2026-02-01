@@ -168,6 +168,30 @@ document.addEventListener('DOMContentLoaded', () => {
             window.location.href = 'admin/';
         });
     }
+
+    // Track resume download
+    const resumeBtn = document.querySelector('a[download]');
+    if (resumeBtn) {
+        resumeBtn.addEventListener('click', () => {
+            if (window.trackEvent) trackEvent('resume_download');
+        });
+    }
+
+    // Track social link clicks
+    document.querySelectorAll('.hero-social a, .footer-social a').forEach(link => {
+        link.addEventListener('click', () => {
+            const platform = link.getAttribute('aria-label') || 'unknown';
+            if (window.trackEvent) trackEvent('social_click', { platform });
+        });
+    });
+
+    // Track contact form submission
+    const form = document.getElementById('contact-form');
+    if (form) {
+        form.addEventListener('submit', () => {
+            if (window.trackEvent) trackEvent('contact_form_submit');
+        });
+    }
 });
 
 // Console greeting
