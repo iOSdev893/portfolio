@@ -124,25 +124,9 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="profile-resume">Resume URL/Path</label>
-                        <input type="text" id="profile-resume" placeholder="resume/Your_Resume.pdf" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label>Upload New Resume</label>
-                        <div class="upload-container">
-                            <input type="file" id="resume-upload" accept=".pdf" class="file-input">
-                            <label for="resume-upload" class="btn-upload">
-                                <i class="fas fa-cloud-upload-alt"></i> Choose PDF File
-                            </label>
-                            <span id="upload-filename" class="upload-filename">No file selected</span>
-                            <button type="button" id="upload-resume-btn" class="btn-upload-submit" disabled>
-                                <i class="fas fa-upload"></i> Upload Resume
-                            </button>
-                        </div>
-                        <div id="upload-progress" class="upload-progress hidden">
-                            <div class="progress-bar"><div class="progress-fill"></div></div>
-                            <span class="progress-text">0%</span>
-                        </div>
+                        <label for="profile-resume">Resume URL</label>
+                        <input type="text" id="profile-resume" placeholder="resume/Abhishek_Mishra_Resume.pdf or Google Drive link">
+                        <small class="form-hint">Use local path (resume/file.pdf) or Google Drive/Dropbox link</small>
                     </div>
                 </section>
 
@@ -340,7 +324,6 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
 
     <!-- App Scripts -->
     <script src="../js/firebase-config.js"></script>
