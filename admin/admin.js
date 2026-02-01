@@ -103,6 +103,9 @@
         });
         document.getElementById('import-file').addEventListener('change', handleImport);
 
+        // Resume Upload
+        setupResumeUpload();
+
         // Track changes
         document.querySelectorAll('input, textarea').forEach(input => {
             input.addEventListener('input', () => {
@@ -1098,6 +1101,94 @@
             toast.style.animation = 'toastIn 0.3s ease reverse';
             setTimeout(() => toast.remove(), 300);
         }, 3000);
+    }
+
+    // Resume Upload
+    function setupResumeUpload() {
+        const fileInput = document.getElementById('resume-upload');
+        const filenameDisplay = document.getElementById('upload-filename');
+        const uploadBtn = document.getElementById('upload-resume-btn');
+        const progressContainer = document.getElementById('upload-progress');
+        const progressFill = document.querySelector('.progress-fill');
+        const progressText = document.querySelector('.progress-text');
+
+        if (!fileInput) return;
+
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                if (file.type !== 'application/pdf') {
+                    showToast('Please select a PDF file', 'error');
+                    fileInput.value = '';
+                    return;
+                }
+                if (file.size > 5 * 1024 * 1024) {
+                    showToast('File size must be less than 5MB', 'error');
+                    fileInput.value = '';
+                    return;
+                }
+                filenameDisplay.textContent = file.name;
+                uploadBtn.disabled = false;
+            } else {
+                filenameDisplay.textContent = 'No file selected';
+                uploadBtn.disabled = true;
+            }
+        });
+
+        uploadBtn.addEventListener('click', () => {
+            const file = fileInput.files[0];
+            if (!file) return;
+
+            uploadResume(file, progressContainer, progressFill, progressText, uploadBtn, filenameDisplay, fileInput);
+        });
+    }
+
+    function uploadResume(file, progressContainer, progressFill, progressText, uploadBtn, filenameDisplay, fileInput) {
+        const storage = firebase.storage();
+        const storageRef = storage.ref();
+        const resumeRef = storageRef.child('resume/Abhishek_Mishra_Resume.pdf');
+
+        progressContainer.classList.remove('hidden');
+        uploadBtn.disabled = true;
+        uploadBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading...';
+
+        const uploadTask = resumeRef.put(file);
+
+        uploadTask.on('state_changed',
+            (snapshot) => {
+                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                progressFill.style.width = progress + '%';
+                progressText.textContent = Math.round(progress) + '%';
+            },
+            (error) => {
+                console.error('Upload error:', error);
+                showToast('Upload failed: ' + error.message, 'error');
+                resetUploadUI(progressContainer, progressFill, progressText, uploadBtn, filenameDisplay, fileInput);
+            },
+            () => {
+                uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+                    document.getElementById('profile-resume').value = downloadURL;
+                    portfolioData.profile = portfolioData.profile || {};
+                    portfolioData.profile.resumeUrl = downloadURL;
+                    hasUnsavedChanges = true;
+                    updateSaveButton();
+                    showToast('Resume uploaded! Click Save to apply changes.', 'success');
+                    resetUploadUI(progressContainer, progressFill, progressText, uploadBtn, filenameDisplay, fileInput);
+                });
+            }
+        );
+    }
+
+    function resetUploadUI(progressContainer, progressFill, progressText, uploadBtn, filenameDisplay, fileInput) {
+        setTimeout(() => {
+            progressContainer.classList.add('hidden');
+            progressFill.style.width = '0%';
+            progressText.textContent = '0%';
+            uploadBtn.innerHTML = '<i class="fas fa-upload"></i> Upload Resume';
+            uploadBtn.disabled = true;
+            filenameDisplay.textContent = 'No file selected';
+            fileInput.value = '';
+        }, 1000);
     }
 
     // Initialize on load
