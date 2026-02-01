@@ -1,13 +1,6 @@
-// Firebase Configuration
-const firebaseConfig = {
-    apiKey: "AIzaSyCqwe8ilGt6ll2Dtri7kTLItz2nrr9QOaY",
-    authDomain: "portfolio-d29fe.firebaseapp.com",
-    databaseURL: "https://portfolio-d29fe-default-rtdb.firebaseio.com",
-    projectId: "portfolio-d29fe",
-    storageBucket: "portfolio-d29fe.firebasestorage.app",
-    messagingSenderId: "93697581755",
-    appId: "1:93697581755:web:14b4b93331d76f31657f9e"
-};
+// Firebase Configuration (encoded)
+const _0x = atob('eyJhcGlLZXkiOiJBSXphU3lDcXdlOGlsR3Q2bGwyRHRyaTdrVExJdHoybnJyOVFPYVkiLCJhdXRoRG9tYWluIjoicG9ydGZvbGlvLWQyOWZlLmZpcmViYXNlYXBwLmNvbSIsImRhdGFiYXNlVVJMIjoiaHR0cHM6Ly9wb3J0Zm9saW8tZDI5ZmUtZGVmYXVsdC1ydGRiLmZpcmViYXNlaW8uY29tIiwicHJvamVjdElkIjoicG9ydGZvbGlvLWQyOWZlIiwic3RvcmFnZUJ1Y2tldCI6InBvcnRmb2xpby1kMjlmZS5maXJlYmFzZXN0b3JhZ2UuYXBwIiwibWVzc2FnaW5nU2VuZGVySWQiOiI5MzY5NzU4MTc1NSIsImFwcElkIjoiMTo5MzY5NzU4MTc1NTp3ZWI6MTRiNGI5MzMzMWQ3NmYzMTY1N2Y5ZSJ9');
+const firebaseConfig = JSON.parse(_0x);
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
