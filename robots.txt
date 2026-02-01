@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://iosdev893.github.io/portfolio/sitemap.xml
+
+# Block admin panel from indexing
+Disallow: /admin/

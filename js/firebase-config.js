@@ -23,6 +23,29 @@ if (typeof firebase.analytics === 'function') {
     });
 }
 
+// Log visitor to Firebase (for notifications)
+function logVisitor() {
+    const visitorsRef = database.ref('visitors');
+    const visitorData = {
+        timestamp: new Date().toISOString(),
+        page: window.location.pathname,
+        referrer: document.referrer || 'direct',
+        userAgent: navigator.userAgent.substring(0, 100)
+    };
+
+    // Get approximate location from timezone
+    try {
+        visitorData.timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    } catch(e) {}
+
+    visitorsRef.push(visitorData).catch(() => {});
+}
+
+// Log visit (only on main site, not admin)
+if (!window.location.pathname.includes('admin')) {
+    logVisitor();
+}
+
 // Admin email for write access
 const ADMIN_EMAIL = 'iosdev89310@gmail.com';
 
