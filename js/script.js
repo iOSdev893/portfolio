@@ -152,8 +152,87 @@ function typeWriter(element, text, speed = 100) {
     type();
 }
 
+// Theme Configuration
+const themes = {
+    neon: {
+        name: 'neon',
+        icon: 'fa-sun',
+        profileImage: 'images/profile.png'
+    },
+    professional: {
+        name: 'professional',
+        icon: 'fa-moon',
+        profileImage: 'images/profile-pro.png'
+    }
+};
+
+// Initialize theme from localStorage or default to neon
+function initTheme() {
+    const savedTheme = localStorage.getItem('portfolio-theme') || 'neon';
+    applyTheme(savedTheme, false);
+}
+
+// Apply theme
+function applyTheme(themeName, animate = true) {
+    const theme = themes[themeName];
+    const profileImage = document.getElementById('profile-image');
+    const themeIcon = document.getElementById('theme-icon');
+    const html = document.documentElement;
+
+    if (themeName === 'professional') {
+        html.setAttribute('data-theme', 'professional');
+    } else {
+        html.removeAttribute('data-theme');
+    }
+
+    // Update profile image with animation
+    if (profileImage) {
+        if (animate) {
+            profileImage.style.opacity = '0';
+            profileImage.style.transform = 'scale(0.8) rotate(-10deg)';
+            setTimeout(() => {
+                profileImage.src = theme.profileImage;
+                profileImage.style.opacity = '1';
+                profileImage.style.transform = 'scale(1) rotate(0deg)';
+            }, 300);
+        } else {
+            profileImage.src = theme.profileImage;
+        }
+    }
+
+    // Update toggle icon
+    if (themeIcon) {
+        const nextTheme = themeName === 'neon' ? 'professional' : 'neon';
+        themeIcon.className = `fas ${themes[nextTheme].icon}`;
+    }
+
+    // Save preference
+    localStorage.setItem('portfolio-theme', themeName);
+
+    // Track theme change
+    if (animate && window.trackEvent) {
+        trackEvent('theme_change', { theme: themeName });
+    }
+}
+
+// Toggle theme
+function toggleTheme() {
+    const currentTheme = localStorage.getItem('portfolio-theme') || 'neon';
+    const newTheme = currentTheme === 'neon' ? 'professional' : 'neon';
+    applyTheme(newTheme, true);
+}
+
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', () => {
+    // Initialize theme
+    initTheme();
+
+    // Theme toggle button
+    const themeToggle = document.getElementById('theme-toggle');
+    if (themeToggle) {
+        themeToggle.addEventListener('click', toggleTheme);
+    }
+
     // Highlight current nav link
     highlightNavLink();
 
