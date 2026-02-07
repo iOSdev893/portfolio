@@ -156,12 +156,12 @@ function typeWriter(element, text, speed = 100) {
 const themes = {
     neon: {
         name: 'neon',
-        icon: 'fa-sun',
+        icon: 'fa-moon',  // Show moon to indicate "switch to professional/light"
         profileImage: 'images/profile.png'
     },
     professional: {
         name: 'professional',
-        icon: 'fa-moon',
+        icon: 'fa-sun',   // Show sun to indicate "switch to neon/dark"
         profileImage: 'images/profile-pro.png'
     }
 };
@@ -200,10 +200,9 @@ function applyTheme(themeName, animate = true) {
         }
     }
 
-    // Update toggle icon
+    // Update toggle icon (show icon for current theme)
     if (themeIcon) {
-        const nextTheme = themeName === 'neon' ? 'professional' : 'neon';
-        themeIcon.className = `fas ${themes[nextTheme].icon}`;
+        themeIcon.className = `fas ${theme.icon}`;
     }
 
     // Save preference
