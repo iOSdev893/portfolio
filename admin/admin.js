@@ -33,6 +33,7 @@
         experience: 'Work Experience',
         projects: 'Featured Projects',
         posts: 'Featured Posts',
+        messages: 'Contact Messages',
         settings: 'Site Settings'
     };
 
@@ -50,6 +51,7 @@
                     currentUser = user;
                     showDashboard();
                     loadData();
+                    loadMessages();
                 } else {
                     showError('Access denied. Only the admin can access this portal.');
                     auth.signOut();
@@ -95,6 +97,9 @@
 
         // Skills tag inputs
         setupTagInputs();
+
+        // Mark All Read
+        document.getElementById('mark-all-read-btn').addEventListener('click', markAllMessagesRead);
 
         // Export/Import
         document.getElementById('export-data-btn').addEventListener('click', exportData);
@@ -581,11 +586,120 @@
         setupListItemEvents(list, 'post');
     }
 
+    // Messages
+    function loadMessages() {
+        database.ref('messages').orderByChild('timestamp').once('value')
+            .then(snapshot => {
+                const messagesList = document.getElementById('messages-list');
+                const messages = [];
+                snapshot.forEach(child => {
+                    messages.push({ key: child.key, ...child.val() });
+                });
+                messages.reverse();
+
+                if (messages.length === 0) {
+                    messagesList.innerHTML = '<p class="empty-state">No messages yet.</p>';
+                    updateUnreadBadge(0);
+                    return;
+                }
+
+                const unreadCount = messages.filter(m => !m.read).length;
+                updateUnreadBadge(unreadCount);
+
+                messagesList.innerHTML = messages.map(msg => `
+                    <div class="list-item message-item ${msg.read ? '' : 'unread'}" data-key="${msg.key}">
+                        <div class="item-content" style="flex: 1;">
+                            <div class="item-title">${escapeHtml(msg.name)} &lt;${escapeHtml(msg.email)}&gt;</div>
+                            <div class="item-subtitle" style="white-space: pre-wrap; margin-top: 4px;">${escapeHtml(msg.message)}</div>
+                            <div class="item-subtitle" style="margin-top: 4px; font-size: 11px; opacity: 0.6;">${new Date(msg.timestamp).toLocaleString()}</div>
+                        </div>
+                        <div class="item-actions">
+                            ${!msg.read ? '<button class="btn-icon mark-read" title="Mark as Read"><i class="fas fa-check"></i></button>' : ''}
+                            <a href="mailto:${escapeHtml(msg.email)}?subject=Re: Portfolio Contact" class="btn-icon" title="Reply"><i class="fas fa-reply"></i></a>
+                            <button class="btn-icon delete delete-msg" title="Delete"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>
+                `).join('');
+
+                // Setup message event handlers
+                messagesList.querySelectorAll('.mark-read').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const key = btn.closest('.message-item').dataset.key;
+                        markMessageRead(key);
+                    });
+                });
+
+                messagesList.querySelectorAll('.delete-msg').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const key = btn.closest('.message-item').dataset.key;
+                        deleteMessage(key);
+                    });
+                });
+            })
+            .catch(error => {
+                console.error('Error loading messages:', error);
+                document.getElementById('messages-list').innerHTML = '<p class="empty-state">Error loading messages.</p>';
+            });
+    }
+
+    function markMessageRead(key) {
+        database.ref('messages/' + key).update({ read: true })
+            .then(() => {
+                loadMessages();
+                showToast('Message marked as read', 'success');
+            });
+    }
+
+    function markAllMessagesRead() {
+        database.ref('messages').once('value')
+            .then(snapshot => {
+                const updates = {};
+                snapshot.forEach(child => {
+                    if (!child.val().read) {
+                        updates['messages/' + child.key + '/read'] = true;
+                    }
+                });
+                if (Object.keys(updates).length === 0) {
+                    showToast('All messages are already read', 'info');
+                    return;
+                }
+                return database.ref().update(updates);
+            })
+            .then(() => {
+                loadMessages();
+                showToast('All messages marked as read', 'success');
+            });
+    }
+
+    function deleteMessage(key) {
+        if (!confirm('Are you sure you want to delete this message?')) return;
+        database.ref('messages/' + key).remove()
+            .then(() => {
+                loadMessages();
+                showToast('Message deleted', 'success');
+            });
+    }
+
+    function updateUnreadBadge(count) {
+        const badge = document.getElementById('unread-badge');
+        if (count > 0) {
+            badge.textContent = count;
+            badge.classList.remove('hidden');
+        } else {
+            badge.classList.add('hidden');
+        }
+    }
+
+    function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text || '';
+        return div.innerHTML;
+    }
+
     // Settings Form
     function populateSettingsForm() {
         const s = portfolioData.settings || {};
         document.getElementById('settings-copyright').value = s.copyrightYear || '';
-        document.getElementById('settings-formspree').value = s.formspreeEndpoint || '';
     }
 
     // Setup List Item Events
@@ -1004,8 +1118,7 @@
 
         // Settings
         portfolioData.settings = {
-            copyrightYear: document.getElementById('settings-copyright').value,
-            formspreeEndpoint: document.getElementById('settings-formspree').value
+            copyrightYear: document.getElementById('settings-copyright').value
         };
     }
 

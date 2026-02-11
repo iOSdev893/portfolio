@@ -59,7 +59,13 @@ const firebaseConfig = {
 {
   "rules": {
     ".read": true,
-    ".write": "auth != null && auth.token.email == 'abhishekmishra0@live.com'"
+    ".write": "auth != null && auth.token.email == 'iosdev89310@gmail.com'",
+    "messages": {
+      ".write": true,
+      "$messageId": {
+        ".validate": "newData.hasChildren(['name', 'email', 'message', 'timestamp'])"
+      }
+    }
   }
 }
 ```
@@ -68,7 +74,9 @@ const firebaseConfig = {
 
 This allows:
 - Anyone can read (public portfolio)
-- Only you (admin email) can write when signed in
+- Only you (admin email) can write to portfolio data when signed in
+- Anyone can write to the `messages` node (contact form submissions)
+- Messages are validated to require name, email, message, and timestamp fields
 
 ### 7. Initialize Database with Default Data
 1. Open your portfolio admin panel: `your-site.github.io/admin/`
@@ -105,7 +113,8 @@ portfolio/
 | Experience | Add, edit, delete work experience entries |
 | Projects | Add, edit, delete project cards |
 | Posts | Add, edit, delete LinkedIn post links |
-| Settings | Copyright year, Formspree endpoint |
+| Messages | View, reply, mark read, delete contact messages |
+| Settings | Copyright year |
 
 ## Data Flow
 

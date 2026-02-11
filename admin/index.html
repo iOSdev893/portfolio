@@ -59,6 +59,9 @@
                 <a href="#posts" class="nav-item" data-section="posts">
                     <i class="fas fa-pen"></i> Posts
                 </a>
+                <a href="#messages" class="nav-item" data-section="messages">
+                    <i class="fas fa-envelope"></i> Messages <span id="unread-badge" class="unread-badge hidden">0</span>
+                </a>
                 <a href="#settings" class="nav-item" data-section="settings">
                     <i class="fas fa-sliders-h"></i> Settings
                 </a>
@@ -274,6 +277,19 @@
                     </div>
                 </section>
 
+                <!-- Messages Section -->
+                <section id="section-messages" class="content-section">
+                    <div class="list-header">
+                        <h3>Contact Messages</h3>
+                        <button id="mark-all-read-btn" class="btn-action">
+                            <i class="fas fa-check-double"></i> Mark All Read
+                        </button>
+                    </div>
+                    <div id="messages-list" class="items-list">
+                        <p class="empty-state">Loading messages...</p>
+                    </div>
+                </section>
+
                 <!-- Settings Section -->
                 <section id="section-settings" class="content-section">
                     <h3>Site Settings</h3>
@@ -282,8 +298,8 @@
                         <input type="text" id="settings-copyright" placeholder="2026">
                     </div>
                     <div class="form-group">
-                        <label for="settings-formspree">Formspree Endpoint</label>
-                        <input type="url" id="settings-formspree" placeholder="https://formspree.io/f/xxxxx">
+                        <label>Contact Form</label>
+                        <p class="form-hint">Contact messages are stored in Firebase and viewable in the Messages section.</p>
                     </div>
                     <h3>Database Actions</h3>
                     <div class="action-buttons">

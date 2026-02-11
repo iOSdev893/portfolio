@@ -910,3 +910,24 @@ body {
 @keyframes spin {
     to { transform: rotate(360deg); }
 }
+
+/* Messages */
+.unread-badge {
+    background: #ef4444;
+    color: white;
+    font-size: 11px;
+    padding: 1px 6px;
+    border-radius: 10px;
+    margin-left: 6px;
+}
+
+.message-item.unread {
+    border-left: 3px solid var(--primary);
+    background: rgba(59, 130, 246, 0.05);
+}
+
+.empty-state {
+    text-align: center;
+    color: var(--text-secondary);
+    padding: 40px 20px;
+}

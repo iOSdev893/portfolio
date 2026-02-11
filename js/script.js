@@ -67,39 +67,51 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Form submission handler with Formspree
+// Form submission handler with Firebase
 const contactForm = document.getElementById('contact-form');
 
 if (contactForm) {
-    contactForm.addEventListener('submit', async function(e) {
+    contactForm.addEventListener('submit', function(e) {
         e.preventDefault();
 
-        const submitBtn = this.querySelector('button[type="submit"]');
+        const submitBtn = document.getElementById('contact-submit-btn');
         const originalText = submitBtn.textContent;
         submitBtn.textContent = 'Sending...';
         submitBtn.disabled = true;
 
-        try {
-            const response = await fetch(this.action, {
-                method: 'POST',
-                body: new FormData(this),
-                headers: {
-                    'Accept': 'application/json'
-                }
-            });
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const message = document.getElementById('message').value.trim();
 
-            if (response.ok) {
-                alert('Thank you! Your message has been sent successfully.');
-                this.reset();
-            } else {
-                throw new Error('Form submission failed');
-            }
-        } catch (error) {
-            alert('Oops! Something went wrong. Please try again or email directly.');
-        } finally {
+        if (!name || !email || !message) {
+            alert('Please fill in all fields.');
             submitBtn.textContent = originalText;
             submitBtn.disabled = false;
+            return;
         }
+
+        const messageData = {
+            name: name,
+            email: email,
+            message: message,
+            timestamp: new Date().toISOString(),
+            read: false
+        };
+
+        database.ref('messages').push(messageData)
+            .then(() => {
+                alert('Thank you! Your message has been sent successfully.');
+                contactForm.reset();
+                if (window.trackEvent) trackEvent('contact_form_submit');
+            })
+            .catch((error) => {
+                console.error('Error sending message:', error);
+                alert('Oops! Something went wrong. Please try again or email directly.');
+            })
+            .finally(() => {
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            });
     });
 }
 
@@ -263,13 +275,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Track contact form submission
-    const form = document.getElementById('contact-form');
-    if (form) {
-        form.addEventListener('submit', () => {
-            if (window.trackEvent) trackEvent('contact_form_submit');
-        });
-    }
+    // Contact form tracking is handled in the Firebase submission handler above
 });
 
 // Console greeting
