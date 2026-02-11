@@ -100,17 +100,17 @@ if (contactForm) {
 
         database.ref('messages').push(messageData)
             .then(() => {
-                alert('Thank you! Your message has been sent successfully.');
                 contactForm.reset();
-                if (window.trackEvent) trackEvent('contact_form_submit');
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+                try { if (window.trackEvent) trackEvent('contact_form_submit'); } catch(e) {}
+                alert('Thank you! Your message has been sent successfully.');
             })
             .catch((error) => {
                 console.error('Error sending message:', error);
-                alert('Oops! Something went wrong. Please try again or email directly.');
-            })
-            .finally(() => {
                 submitBtn.textContent = originalText;
                 submitBtn.disabled = false;
+                alert('Oops! Something went wrong. Please try again or email directly.');
             });
     });
 }
